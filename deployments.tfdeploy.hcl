@@ -1,13 +1,16 @@
 identity_token "gcp" {
-  audience = ["gcp.workload.identity"]
+  # Must be the fully qualified path to the identity provider: //iam.googleapis.com/projects/<PROJECT NUMBER>/locations/global/workloadIdentityPools/<POOL ID>/providers/<PROVIDER ID>
+  audience = ["<Set to your GCP token audience>"]
 }
 
 deployment "production" {
   variables = {
-    public_ssh_key_url  = "<INSERT URL TO PUB SSH KEY FOR COMPUTE INSTANCE>"
-    identity_token_file = identity_token.gcp.jwt_filename
-    gcp_project         = "<INSERT PROJECT ID>"
-    gcp_region          = "us-central1"
-    gcp_zone            = "us-central1-a"
+    public_ssh_key_url         = "<Set to a URL where your public SSH key can be read. Used for compute instance login auth>"
+    identity_token_file        = identity_token.gcp.jwt_filename
+    gcp_audience               = "<Set to your GCP token audience>"
+    gcp_service_account_email  = "<Set to your GCP service account email>"
+    gcp_project_id             = "Set to your GCP project ID>"
+    gcp_region                 = "us-central1"
+    gcp_zone                   = "us-central1-a"
   }
 }

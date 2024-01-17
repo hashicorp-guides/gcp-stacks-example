@@ -1,3 +1,12 @@
+data "http" "ssh_key" {
+  url = var.public_ssh_key_url
+}
+
+data "google_compute_image" "my_image" {
+  family  = "debian-11"
+  project = "debian-cloud"
+}
+
 resource "google_compute_instance" "default" {
   name         = "example-instance"
   machine_type = "e2-medium"
@@ -5,7 +14,7 @@ resource "google_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      image = data.google_compute_image.my_image.self_link
     }
   }
 
@@ -17,7 +26,7 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file(var.public_ssh_key_url)}"
+    ssh-keys = "user:${data.http.ssh_key.response_body}"
   }
 
   service_account {
