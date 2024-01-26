@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 data "http" "ssh_key" {
   url = var.public_ssh_key_url
 }
