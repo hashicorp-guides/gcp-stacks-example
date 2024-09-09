@@ -9,7 +9,7 @@ store "varset" "gcp_credentials" {
 deployment "production" {
   inputs = {
     public_ssh_key_url = "<Set to a URL where your public SSH key can be read. Used for compute instance login auth>"
-    google_credentials = store.varset.gcp_credentials.credentials
+    gcp_credentials    = store.varset.gcp_credentials.credentials
     gcp_project_id     = "<Set to your GCP project ID>"
     gcp_region         = "us-central1"
     gcp_zone           = "us-central1-a"
